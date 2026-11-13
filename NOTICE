@@ -1,0 +1,17 @@
+cohesivemodules: a Lean 4 formalization of Block's theorem on cohesive modules
+Copyright 2026 Julian Holstein
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes material adapted from TauCeti (https://github.com/TauCetiProject/TauCeti),
+licensed under the Apache License, Version 2.0, Copyright (c) 2026 The Tau Ceti contributors:
+- Cohesivemodules/Analysis/Pompeiu.lean: adapted from TauCeti/Analysis/Complex/Pompeiu.lean and
+  lemmas of TauCeti/MeasureTheory/Integral/IntegralEqImproper.lean and
+  TauCeti/LinearAlgebra/Complex/Module.lean (modifications listed in the file's docstring);
+- Cohesivemodules/ChecksK7.lean: a transcription of TauCeti's Dolbeault operator and type
+  projections (TauCeti/Geometry/Manifold/DifferentialForm/Dolbeault/Basic.lean,
+  TauCeti/Topology/Algebra/Module/Alternating/AlmostComplexType.lean), used only for a
+  comparison check.
+
+This product depends on Mathlib (https://github.com/leanprover-community/mathlib4), licensed
+under the Apache License, Version 2.0; some proofs follow the structure of Mathlib proofs.

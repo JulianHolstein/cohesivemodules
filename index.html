@@ -1,0 +1,193 @@
+<!doctype html>
+<!-- Landing page (documentation plan D8). Hand-written; links into the generated outputs
+     blueprint/web/, blueprint/print/print.pdf and docbuild/.lake/build/doc/.
+     Serve the repository root over HTTP (e.g. `python3 -m http.server`), not file://. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Block's Theorem in Lean</title>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --fg: #1d1d1b;
+    --muted: #5d5b55;
+    --rule: #dedbd2;
+    --card: #ffffff;
+    --accent: #0b4d1e;
+    --accent-soft: #e4efe6;
+    --code-bg: #f1efe9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161715;
+      --fg: #e7e5df;
+      --muted: #a29f97;
+      --rule: #34352f;
+      --card: #1e1f1c;
+      --accent: #8fd0a0;
+      --accent-soft: #1f3324;
+      --code-bg: #262723;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161715;
+    --fg: #e7e5df;
+    --muted: #a29f97;
+    --rule: #34352f;
+    --card: #1e1f1c;
+    --accent: #8fd0a0;
+    --accent-soft: #1f3324;
+    --code-bg: #262723;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 17px/1.6 Charter, "Iowan Old Style", Georgia, serif;
+  }
+  main { max-width: 52rem; margin: 0 auto; padding: 3rem 16px 4rem; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.4rem; }
+  h2 {
+    font: 600 0.8rem/1.4 system-ui, sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 2.8rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin: 0 0 1rem; }
+  .lede { color: var(--muted); font-size: 1.05rem; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  code {
+    font: 0.86em/1.4 "JuliaMono", "SF Mono", Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .card:hover, .card:focus-visible { border-color: var(--accent); }
+  .card strong {
+    display: block;
+    font: 600 1.1rem/1.3 system-ui, sans-serif;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .card span { color: var(--muted); font-size: 0.95rem; }
+  .sub { font-size: 0.95rem; margin: 0.6rem 0 0; color: var(--muted); }
+  ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+  li { margin-bottom: 0.5rem; }
+  .status {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 0.7rem 1rem;
+    border-radius: 0 6px 6px 0;
+  }
+  footer { margin-top: 3rem; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Block's theorem in Lean&nbsp;4</h1>
+  <p class="lede">Cohesive modules over the Dolbeault algebra of a compact complex manifold
+    and perfect complexes of holomorphic sheaves: <code>Ho(P_A) ≃ D_perf(X, O_X)</code>.</p>
+
+  <p class="status">Everything is proved: there is no <code>sorry</code>, and the three main
+    theorems depend only on the axioms <code>propext</code>, <code>Classical.choice</code> and
+    <code>Quot.sound</code>. Built on Lean&nbsp;4 with Mathlib <code>v4.35.0</code>.</p>
+
+  <h2>Documentation</h2>
+  <div class="cards">
+    <a class="card" href="blueprint/web/index.html">
+      <strong>Blueprint</strong>
+      <span>The proof strategy: definitions and results item by item, with informal proofs,
+        sources, and links to the Lean declarations.</span>
+    </a>
+    <a class="card" href="docbuild/.lake/build/doc/Cohesivemodules.html">
+      <strong>API docs</strong>
+      <span>Every Lean declaration with its docstring. Start at the root page, which links the
+        overview hubs.</span>
+    </a>
+  </div>
+  <p class="sub">Also:
+    <a href="blueprint/web/dep_graph_document.html">dependency graph</a> ·
+    <a href="blueprint/print/print.pdf">blueprint (PDF)</a> ·
+    <a href="docs/formalization-summary.pdf">formalization summary (PDF)</a></p>
+
+  <h2>Main results</h2>
+  <p>Let <code>X</code> be a compact Hausdorff complex manifold modelled on a
+    finite-dimensional complex space <code>E</code>, <code>A = 𝒜_X(X)</code> its Dolbeault
+    algebra of smooth <code>(0, q)</code>-forms with <code>∂̄</code>, and <code>O_X</code> the
+    sheaf of holomorphic functions.</p>
+  <ul>
+    <li><strong>Block's theorem</strong>
+      (<a href="docbuild/.lake/build/doc/Cohesivemodules/Statements.html#Cohesive.MainStatement"><code>MainStatement</code></a>,
+      proved as
+      <a href="docbuild/.lake/build/doc/Cohesivemodules/MainH2.html#main_theorem"><code>main_theorem</code></a>).
+      The functor <code>J : Ho(P_A) ⥤ D(O_X)</code>, <code>M ↦ α(M)</code>, is full and
+      faithful with essential image <code>D_perf(X, O_X)</code>.
+      [Block, Thm 4.1.3], in the perfect form of [Antweiler, Thm 7.2.20].</li>
+    <li><strong>Conditional form</strong>
+      (<a href="docbuild/.lake/build/doc/Cohesivemodules/StatementsConditional.html#Cohesive.MainStatementConditional"><code>MainStatementConditional</code></a>,
+      proved as
+      <a href="docbuild/.lake/build/doc/Cohesivemodules/Main.html#main_theorem_conditional"><code>main_theorem_conditional</code></a>).
+      The same statement assuming the Dolbeault–Grothendieck lemma (H1) and the local gauge
+      lemma (H2). Both are now theorems, so this is a corollary.</li>
+    <li><strong>Twisted theorem</strong>
+      (<a href="docbuild/.lake/build/doc/Cohesivemodules/StatementsTwisted.html#Cohesive.MainStatementTwisted"><code>MainStatementTwisted</code></a>,
+      proved as
+      <a href="docbuild/.lake/build/doc/Cohesivemodules/MainTwisted.html#Cohesive.main_theorem_twisted"><code>main_theorem_twisted</code></a>).
+      For a <code>∂̄</code>-closed <code>h ∈ 𝒜^{0,2}(X)</code> with a twist datum, cohesive
+      modules over the curved algebra <code>(𝒜_X(X), ∂̄, h)</code> are equivalent to twisted
+      perfect complexes. [Antweiler, Thm 7.4.3].</li>
+  </ul>
+
+  <h2>Overview hubs</h2>
+  <p>One page per part of the library: main definitions and results, conventions and signs,
+    files.</p>
+  <ul>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/CohesiveModules.html"><em>Cohesive modules</em></a>
+      and the homotopy category <code>Ho(P_A)</code></li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/Triangulated.html"><em>Triangulated structure</em></a>
+      on <code>Ho(P_A)</code></li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/SheavesPerfect.html"><em>Sheaves and perfect complexes</em></a></li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/Dolbeault.html"><em>Dolbeault algebra</em></a>
+      and <code>O_X</code></li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/BlockTheorem.html"><em>Block's theorem</em></a>:
+      the functor <code>J</code></li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/DolbeaultGrothendieck.html"><em>Dolbeault–Grothendieck lemma</em></a>
+      (H1) and its proof</li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/LocalGauge.html"><em>Local gauge lemma</em></a>
+      (H2) and its proof</li>
+    <li><a href="docbuild/.lake/build/doc/Cohesivemodules/Hubs/TwistedTheorem.html"><em>Twisted theorem</em></a>:
+      curved cohesive modules and twisted perfect complexes</li>
+  </ul>
+
+  <h2>Sources</h2>
+  <ul>
+    <li>[Block] J. Block, <em>Duality and equivalence of module categories in noncommutative
+      geometry</em>, arXiv:math/0509284.</li>
+    <li>[Antweiler] P. Antweiler, <em>Curved ∞-local systems and projectively flat
+      Riemann–Hilbert correspondence</em>, arXiv:2411.19595.</li>
+  </ul>
+
+  <footer>The blueprint and API docs are generated; regenerate them as described in
+    <code>blueprint/status.md</code> ("Building the documentation") before serving this page.</footer>
+</main>
+</body>
+</html>

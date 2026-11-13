@@ -1,0 +1,14 @@
+name = "docbuild"
+reservoir = false
+version = "0.1.0"
+packagesDir = "../.lake/packages"
+
+[[require]]
+scope = "leanprover"
+name = "doc-gen4"
+# The tag matching `lean-toolchain` (v4.35.0); update together with the toolchain.
+rev = "v4.35.0"
+
+[[require]]
+name = "cohesivemodules"
+path = "../"

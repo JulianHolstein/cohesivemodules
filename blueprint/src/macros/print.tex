@@ -1,0 +1,31 @@
+% Macros only for the pdf version; each has a counterpart in macros/web.tex.
+%
+% Dummy macros for commands that only make sense in the web version (from the leanblueprint
+% template).
+\newcommand{\lean}[1]{}
+\newcommand{\discussion}[1]{}
+\newcommand{\leanok}{}
+\newcommand{\mathlibok}{}
+\newcommand{\notready}{}
+% Arguments of \uses and \proves must be real labels: invisible refs (LaTeX warns if a label
+% is missing, nothing is shown in the pdf).
+\ExplSyntaxOn
+\NewDocumentCommand{\uses}{m}
+ {\clist_map_inline:nn{#1}{\vphantom{\ref{##1}}}%
+  \ignorespaces}
+\NewDocumentCommand{\proves}{m}
+ {\clist_map_inline:nn{#1}{\vphantom{\ref{##1}}}%
+  \ignorespaces}
+\ExplSyntaxOff
+
+% Deviation sign of the Markdown blueprints.
+\newcommand{\warn}{⚠}
+
+% Unicode characters that no installed font has (LuaLaTeX logs "Missing character: There is no
+% ... in font ..."): typeset from glyphs every font has. Add new ones here when the log shows them.
+% The web version needs nothing: the browser finds a font.
+\usepackage{newunicodechar}
+\newunicodechar{ₗ}{\textsubscript{l}}
+\newunicodechar{ₙ}{\textsubscript{n}}
+\newunicodechar{ᶜ}{\textsuperscript{c}}
+\newunicodechar{ȟ}{\v{h}}

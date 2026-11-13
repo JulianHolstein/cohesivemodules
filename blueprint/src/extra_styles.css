@@ -1,0 +1,53 @@
+/* CSS tweaks for this blueprint (copied into blueprint/web/styles by plasTeX). */
+
+/* Vertical line on the left of statements and proofs (leanblueprint template). */
+div.theorem_thmcontent {
+	border-left: .15rem solid black;
+}
+
+div.proposition_thmcontent {
+	border-left: .15rem solid black;
+}
+
+div.lemma_thmcontent {
+	border-left: .1rem solid black;
+}
+
+div.corollary_thmcontent {
+	border-left: .1rem solid black;
+}
+
+div.proof_content {
+	border-left: .08rem solid grey;
+}
+
+/* Text column next to the sidebar. The theme centres the 75ch column in the space right of the
+ * table of contents, which leaves a wide gap on wide screens; align it left instead. */
+@media (min-width: 1024px) {
+	div.content-wrapper {
+		margin-left: 2rem;
+		margin-right: auto;
+	}
+}
+
+/* Wide code blocks and display formulas. The text column is 75ch, so Lean code and formulas
+ * that are a little longer got a scroll bar even on wide screens. Paragraphs keep the column;
+ * these blocks may grow into the free space right of it, up to the width of div.content minus a
+ * safety margin for the column's left margin and the indentation of statements, proofs and the
+ * blocks themselves. They scroll only when even that is not enough (narrow windows). Code no
+ * longer wraps, so Lean lines keep their layout. */
+div.content {
+	container-type: inline-size;
+}
+
+pre.verbatim,
+div.displaymath {
+	width: max-content;
+	min-width: calc(100% - 4rem);
+	max-width: calc(100cqw - 9rem);
+	overflow-x: auto;
+}
+
+pre.verbatim {
+	white-space: pre;
+}
