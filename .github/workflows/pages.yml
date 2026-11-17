@@ -90,12 +90,18 @@ jobs:
       - name: Install leanblueprint (versions of the local build)
         run: |
           sudo apt-get update
-          sudo apt-get install -y graphviz libgraphviz-dev
+          # texlive-base for `kpsewhich`: plasTeX finds `\input` files only through it (without
+          # it the v1.0-2 site had a blueprint with no chapters).
+          sudo apt-get install -y graphviz libgraphviz-dev texlive-base
           pip install leanblueprint==0.0.20 plasTeX==3.1 plastexdepgraph==0.0.5 \
             plastexshowmore==0.0.2
 
       - name: Blueprint web version
-        run: leanblueprint web
+        run: |
+          leanblueprint web
+          for c in intro A S C F Z2 Z3 Z4 Z5; do
+            test -f "blueprint/web/chap-$c.html" || { echo "missing chapter $c"; exit 1; }
+          done
 
       - uses: actions/download-artifact@v4
         with:
@@ -116,6 +122,9 @@ jobs:
           if grep -rl 'docbuild/' _site/index.html _site/blueprint/web; then
             echo "unrewritten links to docbuild/"; exit 1
           fi
+          n=$(cat _site/blueprint/web/*.html | grep -o '\.\./\.\./api/' | wc -l)
+          echo "blueprint links into the API docs: $n"
+          test "$n" -gt 100 || { echo "too few blueprint links into the API docs"; exit 1; }
           du -sh _site
 
       - uses: actions/upload-pages-artifact@v3
