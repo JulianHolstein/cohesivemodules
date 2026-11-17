@@ -10,13 +10,19 @@
 \usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 
 % The Markdown text keeps its Unicode mathematics (as the Lean docstrings, D5); a fallback chain
-% supplies the glyphs that the text and mono fonts lack.
+% supplies the glyphs that the text and mono fonts lack. All fonts are loaded by file name from
+% TeX Live (packages stix2-otf, dejavu, gnu-freefont), never from the system, so that the PDF
+% builds the same on macOS and on the Linux runner of the Pages workflow.
 \directlua{luaotfload.add_fallback("bpfb",
-  {"STIX Two Math:mode=harf;", "STIXGeneral:mode=harf;", "Apple Symbols:mode=harf;",
-   "Arial Unicode MS:mode=harf;"})}
-\setmainfont{STIX Two Text}[RawFeature={fallback=bpfb}]
-\setmathfont{STIX Two Math}
-\setmonofont{Menlo}[Scale=0.85,RawFeature={fallback=bpfb}]
+  {"file:STIXTwoMath-Regular.otf:mode=harf;", "file:DejaVuSans.ttf:mode=harf;",
+   "file:FreeSerif.otf:mode=harf;", "file:FreeMono.otf:mode=harf;"})}
+\setmainfont{STIXTwoText}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic, RawFeature={fallback=bpfb}]
+\setmathfont{STIXTwoMath-Regular.otf}
+\setmonofont{DejaVuSansMono}[
+  Extension=.ttf, UprightFont=*, BoldFont=*-Bold, ItalicFont=*-Oblique,
+  BoldItalicFont=*-BoldOblique, Scale=0.85, RawFeature={fallback=bpfb}]
 \emergencystretch=4em
 
 \input{macros/common}

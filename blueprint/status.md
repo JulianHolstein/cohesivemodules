@@ -31,6 +31,11 @@ From the repository root, after `lake exe cache get` and `lake build`:
 5. Serve the repository root over HTTP and open `index.html`; the `\lean` links of the blueprint
    point to `../../docbuild/.lake/build/doc`.
 
+The workflow `.github/workflows/pages.yml` runs steps 3–4 on GitHub for each release tag (the
+generated TeX of step 2 is committed), with the PDF built in TeX Live 2023, and publishes the
+result at <https://julianholstein.github.io/cohesivemodules/>; there the API docs are served
+from `api/` and the links to them are rewritten.
+
 ## Layer A (algebra)
 
 | Item | Lean files | Status |

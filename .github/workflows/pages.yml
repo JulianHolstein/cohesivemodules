@@ -1,0 +1,122 @@
+name: Documentation (GitHub Pages)
+
+# Builds the documentation site and deploys it to GitHub Pages: the landing page `index.html`,
+# the blueprint (web version with dependency graph, and PDF), the formalization summary and the
+# doc-gen4 API documentation (all of it, including Mathlib, so that every link matches the pinned
+# Mathlib version). The site has the layout of the repository, except that the API docs are
+# served from `api/` instead of `docbuild/.lake/build/doc/`; links are rewritten accordingly.
+#
+# Runs on release tags and by hand. Only in the public repository: the private working copy has
+# no Pages site.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  pdf:
+    if: github.repository == 'JulianHolstein/cohesivemodules'
+    runs-on: ubuntu-latest
+    # Full TeX Live 2023, as used for the local builds; `print.tex` loads its fonts by file name
+    # from TeX Live (stix2-otf, dejavu, gnu-freefont).
+    container: texlive/texlive:TL2023-historic
+    steps:
+      - uses: actions/checkout@v4
+      - name: Blueprint PDF (what `leanblueprint pdf` runs)
+        working-directory: blueprint/src
+        run: |
+          mkdir -p ../print
+          latexmk -output-directory=../print
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blueprint-pdf
+          path: blueprint/print/print.pdf
+          if-no-files-found: error
+
+  site:
+    if: github.repository == 'JulianHolstein/cohesivemodules'
+    needs: pdf
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Build the library
+        run: |
+          lake exe cache get
+          lake build
+
+      - name: API documentation (doc-gen4, about an hour)
+        working-directory: docbuild
+        run: lake build Cohesivemodules:docs
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install leanblueprint (versions of the local build)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz libgraphviz-dev
+          pip install leanblueprint==0.0.20 plasTeX==3.1 plastexdepgraph==0.0.5 \
+            plastexshowmore==0.0.2
+
+      - name: Blueprint web version
+        run: leanblueprint web
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: blueprint-pdf
+          path: blueprint/print
+
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/blueprint _site/docs
+          cp index.html _site/
+          cp -R blueprint/web _site/blueprint/web
+          cp -R blueprint/print _site/blueprint/print
+          cp docs/formalization-summary.pdf _site/docs/
+          cp -R docbuild/.lake/build/doc _site/api
+          sed -i 's|docbuild/\.lake/build/doc/|api/|g' _site/index.html
+          find _site/blueprint/web -name '*.html' -print0 \
+            | xargs -0 sed -i 's|\.\./\.\./docbuild/\.lake/build/doc/|../../api/|g'
+          if grep -rl 'docbuild/' _site/index.html _site/blueprint/web; then
+            echo "unrewritten links to docbuild/"; exit 1
+          fi
+          du -sh _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.repository == 'JulianHolstein/cohesivemodules'
+    needs: site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

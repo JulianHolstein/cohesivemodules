@@ -8,6 +8,9 @@ Dolbeault algebra of a compact complex manifold with perfect complexes of holomo
 depend only on Lean's standard axioms `propext`, `Classical.choice` and `Quot.sound`. The project
 has about 74,000 lines in about 300 files.
 
+**Documentation:** <https://julianholstein.github.io/cohesivemodules/> (blueprint with dependency
+graph, blueprint PDF, API documentation with overview pages, formalization summary).
+
 ## The main results
 
 Throughout, `X` is a compact Hausdorff complex manifold modelled on a finite-dimensional complex
@@ -85,7 +88,9 @@ lake build           # the whole project; a clean build takes a while
 ```
 
 The blueprint (web pages with the dependency graph, and PDF) and the API documentation are
-generated; how to build them is described in `blueprint/status.md`.
+generated; how to build them is described in `blueprint/status.md`. They are online at
+<https://julianholstein.github.io/cohesivemodules/>, built for each release tag by the workflow
+`.github/workflows/pages.yml`.
 
 ## Repository layout
 
