@@ -558,7 +558,8 @@ Sub-items (v1.9, audit F2):
 ### C6 — Comparison theorem (BUILD, S)
 For resolving data, J : Ho(P_{𝒜(X)}) ⥤ D(R) is full and faithful (C4) with essential image
 exactly D_perf(X, R) (C2, C5); equivalently its corestriction to D_perf is an equivalence.
-[A, Thm 7.2.20 at h = 0], [CHL, Thm 7.10] (full faithfulness: [CHL, Prop 7.4]).
+[A, Thm 7.2.20 at h = 0], [CHL, Thm 7.10] (for twisted modules) and [CHL, Cor 7.13] (the
+same for cohesive modules, via [CHL, Cor 3.4]) (full faithfulness: [CHL, Prop 7.4]).
 
 ### C7 — The explicit model T(K) of 𝒜 ⊗_R K (BUILD, L) (v1.11)
 Used by C2, C4 step 3 and C5.a–c in place of the sheafified tensor product, whose sections are
@@ -806,7 +807,7 @@ phase 7.)
 
 ### Z6 — Dg-level quasi-equivalence
 Upgrade the equivalence of homotopy categories to a quasi-equivalence of dg-categories
-[CHL, Cor 7.7, Rem 7.4]. Needs DG-category infrastructure (Tau Ceti DGAInfinity roadmap as a
+[CHL, Cor 7.7, Rem 7.5]. Needs DG-category infrastructure (Tau Ceti DGAInfinity roadmap as a
 design reference) and either flatness of 𝒜 over O (Malgrange) or a K-flat substitute.
 
 ### Z7 — Open manifolds
@@ -1497,3 +1498,11 @@ the same 276 declarations): `MainStatement` → `MainStatementConditional` (file
 `main_theorem` now name the canonical statement without hypotheses. The two statement files were
 unfrozen by the human for the rename and refrozen. Earlier entries of this history, old gate
 sheets and dated PROGRESS entries keep the old names.
+
+**v1.23 (17 Nov 2026), approved by the human 17 Nov 2026 — [CHL] citations.** Checked against
+the v3 PDF (arXiv 1802.02549v3). Fixed: the "Condition (*)" quote cited in `blueprint-ll.md`
+(H2 sources) is in [CHL, §8.2, proof of Thm 8.3], not §7.3 (v3 has no §7.3); Z6 cites
+[CHL, Rem 7.5] (dg enhancement), not Rem 7.4. Added: C6 also cites [CHL, Cor 7.13], the form
+of Thm 7.10 for cohesive modules (via Cor 3.4); also in the docstring of
+`Comparison/Equivalence.lean` and the *Block's theorem* hub. Thm 7.10, Prop 7.4, Prop 3.1,
+Lemma 3.3 and Cor 7.7 confirmed. Content and statuses unchanged.

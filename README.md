@@ -89,7 +89,7 @@ lake build           # the whole project; a clean build takes a while
 
 The blueprint (web pages with the dependency graph, and PDF) and the API documentation are
 generated; how to build them is described in `blueprint/status.md`. They are online at
-<https://julianholstein.github.io/cohesivemodules/>, built for each release tag by the workflow
+<https://julianholstein.github.io/cohesivemodules/>, built for each release by the workflow
 `.github/workflows/pages.yml`.
 
 ## Repository layout

@@ -32,7 +32,7 @@ open CategoryTheory Opposite TopologicalSpace
 
 variable {X : Type} [TopologicalSpace X]
 
-/-- **G9.** The sheaf of rings `ringOf R` of a sheaf of commutative rings is commutative. -/
+/-- **C0** (audit G9). The sheaf of rings `ringOf R` of a sheaf of commutative rings is commutative. -/
 theorem isComm_ringOf (R : Sheaf (Opens.grothendieckTopology X) CommRingCat.{0}) :
     IsComm (ringOf R) := by
   intro U a b

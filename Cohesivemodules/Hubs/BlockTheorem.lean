@@ -78,7 +78,8 @@ locally free `𝒜^q`, a sheaf of commutative rings `O` (as a `RingSheaf`, `R = 
 `ρ : O → 𝒜⁰`, `d ∘ ρ = 0`, such that `O → 𝒜⁰ → 𝒜¹ → ⋯` is a resolution, and local lifting (LL).
 For such data
 the comparison theorem `Cohesive.ResolvingData.comparison` (C6,
-[[A][Antweiler], Thm 7.2.20 at `h = 0`], [[CHL][ChuangHolsteinLazarev], Thm 7.10]) proves `J`
+[[A][Antweiler], Thm 7.2.20 at `h = 0`]; [[CHL][ChuangHolsteinLazarev], Thm 7.10] for twisted
+modules and Cor 7.13 for cohesive modules) proves `J`
 full, faithful, with essential image `Perf`. F14 shows that the
 Dolbeault data are resolving data given H1 (exactness in degrees `≥ 1`) and H2 (LL), and F15
 applies C6.
@@ -243,7 +244,7 @@ sheaf), used as `ringOf (holSheaf E X)`; `ρ_U` is the inclusion of holomorphic 
 * [[CHL][ChuangHolsteinLazarev]] J. Chuang, J. Holstein, A. Lazarev, *Maurer–Cartan moduli and
   theorems of
   Riemann–Hilbert type*, Appl. Categ. Struct. 29 (2021); numbering of arXiv 1802.02549v3:
-  Thm 7.10, Prop 7.4.
+  Thm 7.10, Cor 7.13, Prop 7.4.
 * Blueprint: `blueprint/blueprint.md` §1 (M), §4 (C0–C7), §5 (F14–F15), §9 (K1, K6), §11 (v1.11,
   v1.15, v1.18, v1.22); conventions: `blueprint/conventions.md` §2, §7–§9.
 -/

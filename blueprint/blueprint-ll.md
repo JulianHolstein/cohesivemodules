@@ -46,7 +46,7 @@ What remains is a complex of trivial holomorphic bundles, `W = (O^r, A₀)`.
 - **[B] Block**, arXiv math/0509284v2, proof of Lemma 4.1.5 (`references/arXiv-math0509284v2`,
   l. 1034–1083; the published version numbers it Lemma 4.5). This is the only source argument;
   [A, §7.4] ("Assumption 7 follows by [Blo09, Lemma 4.1.5]") and
-  [CHL, §7.3] ("Condition (*) is exactly the content of [Block10, Lemma 4.1.5]") cite it.
+  [CHL, §8.2, proof of Thm 8.3] ("Condition (*) is exactly the content of [Block10, Lemma 4.1.5]") cite it.
 - **[DK] Donaldson–Kronheimer**, *The geometry of four-manifolds*, §2.2.2, pp. 50–53
   (`references/…4-manifolds.pdf`, PDF pp. 63–66). They prove the integrability theorem 2.1.53, the
   matrix case of our statement, with an L^∞ contraction for the Cauchy kernel (2.2.7)–(2.2.8),
