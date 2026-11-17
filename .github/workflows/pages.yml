@@ -54,6 +54,18 @@ jobs:
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
           df -h /
 
+      # doc-gen4 runs one docInfo job per core, each with the Mathlib environment loaded; on the
+      # 16 GB runner, spawning `git` for the source links then failed with "not enough memory"
+      # (v1.0-1, run 44086539129). Swap and overcommit avoid that.
+      - name: Add swap
+        run: |
+          sudo fallocate -l 32G /swapfile-docs
+          sudo chmod 600 /swapfile-docs
+          sudo mkswap /swapfile-docs
+          sudo swapon /swapfile-docs
+          sudo sysctl -w vm.overcommit_memory=1
+          free -h
+
       - uses: actions/checkout@v4
 
       - name: Install elan
